@@ -43,9 +43,9 @@
 				<h3>Как по-умолчанию передается состояние?</h3>
 				<p class="fragment">props</p>
 				<h2 class="fragment">А если нужно передать "родителю" или "брату"?</h2>
+				<h1 class="fragment">Проблема</h1>
 			</section>
 			<section>
-				<h3>Проблема</h3>
 				<img src="assets/redux.svg" alt="">
 			</section>
 			<section>
@@ -86,83 +86,151 @@
 					<li>Каждое изменение состояния возвращает новый объект состояния.</li>
 				</ul>
 			</section>
-			<section data-markdown>
-				<textarea data-template>
-					### Интеграция Redux с React:
-
-					Установка необходимых библиотек:
-
-					```bash
-					npm install redux react-redux
-					```
-
-					Подключение `Provider` к корневому компоненту:
-
-					```js [3: 1-2|8-10]
-					import { Provider } from 'react-redux';
-					import { store } from './store';
-
-					...
-
-					root.render(
-					<React.StrictMode>
-						<Provider store={store}>
-						<App />
-						</Provider>
-					</React.StrictMode>
-					);
-					```
-				  </textarea>
+			<section>
+				<section>
+					<h3>Интеграция Redux с React:</h3>
+					<p>Установка необходимых библиотек:</p>
+					<pre class="bash">
+						<code data-trim data-noescape style="max-height: fit-content;">
+							npm install redux react-redux
+						</code>
+					</pre>
+					<h3>Подключение <code>Provider</code> к корневому компоненту:</h3>
+					<pre class="javascript">
+						<code data-trim data-noescape data-line-numbers style="max-height: fit-content;">
+							import { Provider } from 'react-redux';
+							import { store } from './store';
+							...
+							root.render(
+								&ltReact.StrictMode>
+									&ltProvider store={store}>
+										&ltApp />
+									&lt/Provider>
+								&lt/React.StrictMode>
+							);
+						</code>
+					</pre>
+				</section>
+				<section>
+					<p>Создание <code>slice</code>:</p>
+					<pre class="javascript">
+						<code data-trim data-noescape data-line-numbers style="max-height: fit-content;">
+							import { createSlice } from '@reduxjs/toolkit';
+							const initialState = {
+								value: 0,
+							};
+							export const counterSlice = createSlice({
+								name: 'counter',
+								initialState,
+								reducers: {
+									increment: state => {
+									state.value += 1;
+									},
+								},
+							});
+							export const { increment } = counterSlice.actions;
+							export const selectCount = state => state.counter.value;
+							export default counterSlice.reducer;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Использование хуков <code>useSelector</code> и <code>useDispatch</code> для доступа к состоянию
+						и отправки действий:</h3>
+					<pre class="javascript">
+						<code data-trim data-noescape style="max-height: fit-content;">
+							import { useDispatch, useSelector } from 'react-redux'
+							import { increment, selectCount } from './counterSlice';
+							...
+							const count = useSelector(selectCount);
+							const dispatch = useDispatch();
+							return (
+								&ltbutton onClick={() => dispatch(increment())}>
+									Increment (&ltspan>{count}&lt/span>)
+								&lt/button>
+							);
+							...
+						</code>
+					</pre>
+				</section>
 			</section>
 			<section>
-				<p>Создание <code>slice</code>:</p>
-				<pre class="javascript">
-					<code data-trim data-noescape style="max-height: fit-content;">
-						import { createSlice } from '@reduxjs/toolkit';
-
-						const initialState = {
-							value: 0,
-						};
-
-						export const counterSlice = createSlice({
-							name: 'counter',
-							initialState,
-							reducers: {
-								increment: state => {
-								state.value += 1;
-								},
-							},
-						});
-
-						export const { increment } = counterSlice.actions;
-
-						export const selectCount = state => state.counter.value;
-						
-						export default counterSlice.reducer;
-					</code>
-				</pre>
+				<section>
+					<h1>Тест!</h1>
+					<img src="assets/chill-guy.png" alt="just a chill guy">
+				</section>
+				<section style="font-size: 20px;">
+					<div style="display: flex; flex-direction: column; align-items: start;">
+						<div>Вопрос 1: Что такое Redux?</div>
+						<div>A) Библиотека для стилизации React-компонентов</div>
+						<div>B) Библиотека для управления состоянием приложения</div>
+						<div>C) Фреймворк для создания серверной части приложений</div>
+						<div>D) Инструмент для сборки JavaScript-пакетов</div>
+					</div>
+					<hr>
+					<div style="display: flex; flex-direction: column; align-items: start;">
+						<div>Вопрос 2: Какие основные концепции включает Redux?</div>
+						<div>A) Store</div>
+						<div>B) Components</div>
+						<div>C) Actions</div>
+						<div>D) Reducers</div>
+						<div>E) Middleware</div>
+						<div>F) Dispatch</div>
+					</div>
+					<hr>
+					<div style="display: flex; flex-direction: column; align-items: start;">
+						<div>Вопрос 3: Что выполняет `Provider` в интеграции Redux с React?</div>
+						<div>A) Обеспечивает стилизацию компонентов</div>
+						<div>B) Подключает Redux Store к React-приложению</div>
+						<div>C) Управляет маршрутизацией в приложении</div>
+						<div>D) Оптимизирует производительность компонентов</div>
+					</div>
+					<hr>
+					<div style="display: flex; flex-direction: column; align-items: start;">
+						<div>Вопрос 4: Какой хук используется для доступа к состоянию из Redux Store в функциональном
+							компоненте?</div>
+						<div>A) `useState`</div>
+						<div>B) `useEffect`</div>
+						<div>C) `useSelector`</div>
+						<div>D) `useContext`</div>
+					</div>
+					<hr>
+					<div style="display: flex; flex-direction: column; align-items: start;">
+						<div>Вопрос 5: Что делает `dispatch` в Redux?</div>
+						<div>A) Создает новое состояние</div>
+						<div>B) Отправляет действия (actions) в Redux Store</div>
+						<div>C) Подключает компоненты к хранилищу</div>
+						<div>D) Управляет жизненным циклом компонентов</div>
+					</div>
+				</section>
+				<section>
+					<h3>Ответы:</h3>
+					<div style="display: flex; flex-direction: column; align-items: start; margin-left: 45%;">
+						<li>B</li>
+						<li>A, C, D, F</li>
+						<li>B</li>
+						<li>C</li>
+						<li>B</li>
+					</div>
+				</section>
 			</section>
-			<section data-markdown>
-				<textarea data-template>
-					Использование хуков `useSelector` и `useDispatch` для доступа к состоянию и отправки действий:
-
-					```js [3: 1-2|6-7|10]
-					import { useDispatch, useSelector } from 'react-redux'
-					import { increment, selectCount } from './counterSlice';
-
-					...
-
-					const count = useSelector(selectCount);
-					const dispatch = useDispatch();
-
-					return (
-						<button onClick={() => dispatch(increment())}>
-							Increment (<span>{count}</span>)
-						</button>
-					);
-					...
-					```
-					</textarea>
+			<section>
+				<h3>Playcode:</h3>
+				<a href="https://playcode.io/react_redux_toolkit">playcode.io/react_redux_toolkit</a>
+				<h3 style="margin-top: 64px;">Документация:</h3>
+				<a href="https://redux.js.org/">redux</a>
+				<h3 style="margin-top: 64px;">Альтернативы:</h3>
+				<ul>
+					<li>
+						<a href="https://zustand-demo.pmnd.rs/">zustand</a>
+					</li>
+					<li>
+						<a href="https://recoiljs.org/">recoiljs</a>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<img src="assets/end.png" alt="Всё!">
 			</section>
 		</div>
 	</div>
@@ -180,7 +248,6 @@
 			margin: 0.04,
 			minScale: 0.2,
 			maxScale: 2.0,
-			center: false,
 			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
 		});
 	</script>
